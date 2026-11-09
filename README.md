@@ -1,36 +1,38 @@
-# 🌱 AgroIrrigAI
+# 🌱 AquaFarm
 
-> **Machine Learning platform for intelligent irrigation decision support**
+> **AI-Powered Smart Irrigation & Agricultural Decision Support Platform**
 
-AgroIrrigAI is a Streamlit application developed as part of a **Master's degree in Artificial Intelligence**. It uses an **XGBoost classification model** to estimate the irrigation requirement of an agricultural plot as **Low, Medium, or High**.
+**AquaFarm** is an intelligent irrigation decision-support application developed as part of a Master's degree in Artificial Intelligence. It leverages an **XGBoost classification model** to estimate the irrigation requirements of agricultural plots, categorizing them into three levels: **Low, Medium, or High**.
 
-The application combines agronomic parameters, environmental conditions and real-time weather data to provide an interactive decision-support interface.
+By combining agronomic parameters, environmental conditions, and real-time weather data, AquaFarm provides an interactive platform to support smarter and more informed irrigation decisions.
 
 ## ✨ Key Features
 
-- 🔬 **Manual ML prediction** from agronomic and environmental parameters
-- 🌦️ **Weather-based prediction** using OpenWeather
-- 📂 **Batch prediction** from CSV files
-- 📊 **Prediction probabilities** and risk visualizations with Plotly
-- 🏆 **XGBoost feature importance**
-- 📜 **Session prediction history**
-- 📥 **CSV export** of prediction results
-- 🛡️ Input validation and secure API-key configuration
-- 🎨 Responsive Streamlit interface with a dedicated agricultural theme
+- 🔬 **Manual ML Prediction:** Estimate irrigation requirements using agronomic and environmental parameters.
+- 🌦️ **Weather-Based Prediction:** Integrate real-time weather data through the OpenWeather API.
+- 📂 **Batch Prediction:** Process multiple agricultural records using CSV file uploads.
+- 📊 **Prediction Probabilities:** Visualize classification probabilities and irrigation risk levels with Plotly.
+- 🏆 **Feature Importance:** Explore the most influential variables using XGBoost feature importance.
+- 📜 **Prediction History:** Track predictions throughout the current session.
+- 📥 **CSV Export:** Download prediction results for further analysis.
+- 🛡️ **Input Validation & Security:** Validate user inputs and securely manage API credentials.
+- 🎨 **Interactive Dashboard:** Responsive Streamlit interface with a dedicated agricultural theme.
 
 ## 🧠 Machine Learning
 
-The prediction pipeline reproduces the preprocessing used during model training:
+AquaFarm uses an **XGBoost classification model** trained to predict the irrigation requirements of agricultural plots.
 
-1. Ordinal encoding of crop growth stage
-2. Binary encoding of mulching
-3. One-hot encoding of categorical variables
-4. Boolean-to-integer conversion
-5. Feature alignment with the training schema
-6. XGBoost inference
-7. Custom safety rule: if `P(High) > 0.60`, the prediction is forced to `High`
+The prediction pipeline reproduces the preprocessing steps applied during model training:
 
-### Output classes
+1. Ordinal encoding of crop growth stages.
+2. Binary encoding of mulching.
+3. One-hot encoding of categorical variables.
+4. Boolean-to-integer conversion.
+5. Feature alignment with the original training schema.
+6. XGBoost model inference.
+7. Custom decision rule: if the predicted probability of the High class exceeds 60% (`P(High) > 0.60`), the final prediction is set to High.
+
+### Output Classes
 
 | Class | Interpretation |
 |---|---|
@@ -41,7 +43,7 @@ The prediction pipeline reproduces the preprocessing used during model training:
 ## 🏗️ Project Architecture
 
 ```text
-agroirrigai/
+aquafarm/
 │
 ├── app.py                         # Streamlit application
 ├── prediction.py                  # ML preprocessing and inference
@@ -58,6 +60,7 @@ agroirrigai/
 │   ├── config.toml                # Streamlit theme/server config
 │   └── secrets.toml.example       # Secret configuration template
 │
+├── screenshots/                   # Application screenshots
 ├── .gitignore
 ├── requirements.txt
 └── README.md
@@ -68,8 +71,8 @@ agroirrigai/
 ### 1. Clone the repository
 
 ```bash
-git clone https://github.com/fatiassouli/agroirrigai.git
-cd agroirrigai
+git clone https://github.com/fatiassouli/aquafarm.git
+cd aquafarm
 ```
 
 ### 2. Create a virtual environment
@@ -96,27 +99,27 @@ pip install -r requirements.txt
 
 ### 4. Configure OpenWeather
 
-Create:
+Create the following file:
 
 ```text
 .streamlit/secrets.toml
 ```
 
-with:
+Add your API key:
 
 ```toml
 OPENWEATHER_API_KEY = "YOUR_OPENWEATHER_API_KEY"
 ```
 
-The file is intentionally ignored by Git and must **never** be committed.
+The file is intentionally excluded from Git and must never be committed to the repository.
 
-### 5. Start the application
+### 5. Launch the application
 
 ```bash
 streamlit run app.py
 ```
 
-Then open:
+Open your browser at:
 
 ```text
 http://localhost:8501
@@ -124,51 +127,55 @@ http://localhost:8501
 
 ## ☁️ Deployment
 
-The application is suitable for deployment on **Streamlit Community Cloud**.
+AquaFarm is designed to be deployed using **Streamlit Community Cloud**.
 
-Typical deployment flow:
+Typical deployment workflow:
 
 ```text
 GitHub Repository
        ↓
 Streamlit Community Cloud
        ↓
-Install requirements.txt
+Install dependencies
        ↓
-Configure OPENWEATHER_API_KEY
+Configure application secrets
        ↓
-Run app.py
+Launch app.py
+       ↓
+AquaFarm Dashboard
 ```
 
-For Streamlit Cloud, add the API key under the application's **Secrets** settings instead of committing `.streamlit/secrets.toml`.
+For Streamlit Community Cloud, configure `OPENWEATHER_API_KEY` in the application's **Secrets** settings instead of committing `.streamlit/secrets.toml`.
 
 ## 🔐 Security
 
 API credentials are deliberately excluded from version control.
 
-- `.streamlit/secrets.toml` is ignored by Git
-- `secrets.toml.example` contains only a placeholder
-- OpenWeather credentials should be stored as deployment secrets
-- Never paste API keys directly into Python source files
+- `.streamlit/secrets.toml` is ignored by Git.
+- `secrets.toml.example` contains only a placeholder.
+- OpenWeather credentials are stored as application secrets.
+- API keys must never be hardcoded in Python source files.
 
-> **Important:** if an API key has ever been committed to a public repository, revoke/rotate it from the provider dashboard and replace it with a new key.
+> **Important:** If an API key has ever been committed to a public repository, revoke or rotate it through the provider dashboard and replace it with a new key.
 
 ## 📌 Project Status
 
-**Status:** Academic / portfolio project — functional prototype.
+**Status:** Academic & Portfolio Project — Functional Prototype.
 
-The project demonstrates the integration of:
+AquaFarm demonstrates the practical integration of:
 
-**Machine Learning · XGBoost · Python · Streamlit · Data Processing · Data Visualization · REST API Integration**
+**Artificial Intelligence · Machine Learning · XGBoost · Python · Streamlit · Data Processing · Data Visualization · Weather API Integration**
 
 ## 👩‍💻 Author
 
-**Fatima Zahraa Assouli**  
-Master's student in Artificial Intelligence — Faculté des Sciences de Ben M'Sik, Casablanca, Morocco
+**Fatima Zahraa Assouli**
 
-- LinkedIn: https://www.linkedin.com/in/fatima-zahraa-assouli-204008279/
-- GitHub: https://github.com/fatiassouli
+Master's Student in Artificial Intelligence  
+Faculté des Sciences Ben M'Sik — Casablanca, Morocco.
+
+- **LinkedIn:** https://www.linkedin.com/in/fatima-zahraa-assouli-204008279/
+- **GitHub:** https://github.com/fatiassouli
 
 ## 📄 License
 
-MIT License.
+This project is distributed under the MIT License.
